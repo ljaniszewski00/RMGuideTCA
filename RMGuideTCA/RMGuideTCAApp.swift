@@ -5,7 +5,14 @@ import SwiftUI
 struct RMGuideTCAApp: App {
     var body: some Scene {
         WindowGroup {
-            CharactersListView()
+            CharactersListView(
+                store: Store(
+                    initialState: CharactersListFeature.State(),
+                    reducer: {
+                        CharactersListFeature()
+                    }
+                )
+            )
         }
     }
 }
