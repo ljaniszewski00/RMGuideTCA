@@ -8,17 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		1669B6DF2C75FF1700BB105F /* RMGuideTCAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6DE2C75FF1700BB105F /* RMGuideTCAApp.swift */; };
-		1669B6E12C75FF1700BB105F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6E02C75FF1700BB105F /* ContentView.swift */; };
 		1669B6E32C75FF1800BB105F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1669B6E22C75FF1800BB105F /* Assets.xcassets */; };
 		1669B6E62C75FF1800BB105F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1669B6E52C75FF1800BB105F /* Preview Assets.xcassets */; };
+		1669B6F32C7602DC00BB105F /* CharacterDetailsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6F22C7602DC00BB105F /* CharacterDetailsReducer.swift */; };
+		1669B6F52C7602E800BB105F /* CharacterDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6F42C7602E800BB105F /* CharacterDetailsView.swift */; };
+		1669B6F72C7602F800BB105F /* CharactersListReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6F62C7602F800BB105F /* CharactersListReducer.swift */; };
+		1669B6F92C76030600BB105F /* CharactersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6F82C76030600BB105F /* CharactersListView.swift */; };
+		1669B6FB2C76031100BB105F /* EpisodeDetailsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6FA2C76031100BB105F /* EpisodeDetailsReducer.swift */; };
+		1669B6FD2C76032100BB105F /* EpisodeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6FC2C76032100BB105F /* EpisodeDetailsView.swift */; };
+		1669B7002C76035F00BB105F /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 1669B6FF2C76035F00BB105F /* Swinject */; };
+		1669B7032C7603A900BB105F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 1669B7022C7603A900BB105F /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1669B6DB2C75FF1700BB105F /* RMGuideTCA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RMGuideTCA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1669B6DE2C75FF1700BB105F /* RMGuideTCAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGuideTCAApp.swift; sourceTree = "<group>"; };
-		1669B6E02C75FF1700BB105F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1669B6E22C75FF1800BB105F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1669B6E52C75FF1800BB105F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1669B6F22C7602DC00BB105F /* CharacterDetailsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsReducer.swift; sourceTree = "<group>"; };
+		1669B6F42C7602E800BB105F /* CharacterDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsView.swift; sourceTree = "<group>"; };
+		1669B6F62C7602F800BB105F /* CharactersListReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListReducer.swift; sourceTree = "<group>"; };
+		1669B6F82C76030600BB105F /* CharactersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListView.swift; sourceTree = "<group>"; };
+		1669B6FA2C76031100BB105F /* EpisodeDetailsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsReducer.swift; sourceTree = "<group>"; };
+		1669B6FC2C76032100BB105F /* EpisodeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1669B7032C7603A900BB105F /* ComposableArchitecture in Frameworks */,
+				1669B7002C76035F00BB105F /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +65,10 @@
 		1669B6DD2C75FF1700BB105F /* RMGuideTCA */ = {
 			isa = PBXGroup;
 			children = (
+				1669B6F12C76022C00BB105F /* Core */,
+				1669B6EC2C76014E00BB105F /* Modules */,
+				1669B6F02C76021600BB105F /* Utils */,
 				1669B6DE2C75FF1700BB105F /* RMGuideTCAApp.swift */,
-				1669B6E02C75FF1700BB105F /* ContentView.swift */,
 				1669B6E22C75FF1800BB105F /* Assets.xcassets */,
 				1669B6E42C75FF1800BB105F /* Preview Content */,
 			);
@@ -65,6 +81,57 @@
 				1669B6E52C75FF1800BB105F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1669B6EC2C76014E00BB105F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				1669B6ED2C7601C600BB105F /* CharacterDetails */,
+				1669B6EE2C7601CF00BB105F /* CharactersList */,
+				1669B6EF2C7601D800BB105F /* EpisodeDetails */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		1669B6ED2C7601C600BB105F /* CharacterDetails */ = {
+			isa = PBXGroup;
+			children = (
+				1669B6F22C7602DC00BB105F /* CharacterDetailsReducer.swift */,
+				1669B6F42C7602E800BB105F /* CharacterDetailsView.swift */,
+			);
+			path = CharacterDetails;
+			sourceTree = "<group>";
+		};
+		1669B6EE2C7601CF00BB105F /* CharactersList */ = {
+			isa = PBXGroup;
+			children = (
+				1669B6F62C7602F800BB105F /* CharactersListReducer.swift */,
+				1669B6F82C76030600BB105F /* CharactersListView.swift */,
+			);
+			path = CharactersList;
+			sourceTree = "<group>";
+		};
+		1669B6EF2C7601D800BB105F /* EpisodeDetails */ = {
+			isa = PBXGroup;
+			children = (
+				1669B6FA2C76031100BB105F /* EpisodeDetailsReducer.swift */,
+				1669B6FC2C76032100BB105F /* EpisodeDetailsView.swift */,
+			);
+			path = EpisodeDetails;
+			sourceTree = "<group>";
+		};
+		1669B6F02C76021600BB105F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1669B6F12C76022C00BB105F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +150,10 @@
 			dependencies = (
 			);
 			name = RMGuideTCA;
+			packageProductDependencies = (
+				1669B6FF2C76035F00BB105F /* Swinject */,
+				1669B7022C7603A900BB105F /* ComposableArchitecture */,
+			);
 			productName = RMGuideTCA;
 			productReference = 1669B6DB2C75FF1700BB105F /* RMGuideTCA.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +182,10 @@
 				Base,
 			);
 			mainGroup = 1669B6D22C75FF1700BB105F;
+			packageReferences = (
+				1669B6FE2C76035F00BB105F /* XCRemoteSwiftPackageReference "Swinject" */,
+				1669B7012C7603A900BB105F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 1669B6DC2C75FF1700BB105F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +212,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1669B6E12C75FF1700BB105F /* ContentView.swift in Sources */,
+				1669B6FB2C76031100BB105F /* EpisodeDetailsReducer.swift in Sources */,
+				1669B6F32C7602DC00BB105F /* CharacterDetailsReducer.swift in Sources */,
+				1669B6F92C76030600BB105F /* CharactersListView.swift in Sources */,
 				1669B6DF2C75FF1700BB105F /* RMGuideTCAApp.swift in Sources */,
+				1669B6FD2C76032100BB105F /* EpisodeDetailsView.swift in Sources */,
+				1669B6F72C7602F800BB105F /* CharactersListReducer.swift in Sources */,
+				1669B6F52C7602E800BB105F /* CharacterDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +424,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1669B6FE2C76035F00BB105F /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+		1669B7012C7603A900BB105F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1669B6FF2C76035F00BB105F /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1669B6FE2C76035F00BB105F /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		1669B7022C7603A900BB105F /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1669B7012C7603A900BB105F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1669B6D32C75FF1700BB105F /* Project object */;
 }
