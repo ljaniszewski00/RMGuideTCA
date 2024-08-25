@@ -111,64 +111,64 @@ private extension Views {
         @Perception.Bindable var store: StoreOf<CharactersListFeature>
         
         var body: some View {
-//            WithPerceptionTracking {
-//                
-//            }
-            VStack {
-                List {
-                    switch store.displayingMode {
-                    case .list:
-                        Views.CharactersList(store: store)
-                    case .grid:
-                        Views.CharactersGrid(store: store)
+            WithPerceptionTracking {
+                VStack {
+                    List {
+                        switch store.displayingMode {
+                        case .list:
+                            Views.CharactersList(store: store)
+                        case .grid:
+                            Views.CharactersGrid(store: store)
+                        }
                     }
+                    .listStyle(.plain)
+    //                .refreshable {
+    //                    await charactersListViewModel.onRefresh()
+    //                }
                 }
-                .listStyle(.plain)
-//                .refreshable {
-//                    await charactersListViewModel.onRefresh()
-//                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    let imageName: String = store.displayingMode == .grid ?
-                    CharactersListDisplayMode.list.displayModeIconName : CharactersListDisplayMode.grid.displayModeIconName
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            store.send(.changeDisplayModeButtonTapped)
+                        } label: {
+                            let imageName: String = store.displayingMode == .grid ?
+                            CharactersListDisplayMode.list.displayModeIconName : CharactersListDisplayMode.grid.displayModeIconName
+                            
+                            Image(systemName: imageName)
+                                .foregroundStyle(.gray)
+                        }
+                    }
                     
-                    Button {
-                        store.send(.changeDisplayModeButtonTapped)
-                    } label: {
-                        Image(systemName: imageName)
-                            .foregroundStyle(.gray)
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            store.send(.changeToFavoriteCharacters)
+                        } label: {
+                            let imageName: String = store.displayingOnlyFavoriteCharacters ?
+                            Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName
+                            
+                            Image(systemName: imageName)
+                                .foregroundStyle(
+                                    .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
+                                )
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            store.send(.exitCharactersListButtonTapped)
+                        } label: {
+                            Image(systemName: Views.Constants.exitButtonImageName)
+                                .foregroundStyle(.gray)
+                        }
                     }
                 }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        store.send(.changeToFavoriteCharacters)
-                    } label: {
-                        let imageName: String = store.displayOnlyFavoriteCharacters ?
-                        Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName
-                        Image(systemName: imageName)
-                            .foregroundStyle(
-                                .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
-                            )
-                    }
-                }
-                
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        store.send(.exitCharactersListButtonTapped)
-                    } label: {
-                        Image(systemName: Views.Constants.exitButtonImageName)
-                            .foregroundStyle(.gray)
-                    }
-                }
+                .searchable(text: $store.searchText.sending(\.searchTextChanged))
+                .modifier(LoadingIndicatorModal(isPresented: $store.displayingLoadingModal.sending(\.displayLoadingModal)))
+                .modifier(ErrorModal(isPresented: $store.displayingErrorModal.sending(\.displayErrorModal),
+                                     errorDescription: store.errorText))
+                .navigationTitle(Views.Constants.navigationTitleFullList)
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .searchable(text: $store.searchText.sending(\.searchTextChanged))
-            .modifier(LoadingIndicatorModal(isPresented: $store.displayingLoadingModal.sending(\.displayLoadingModal)))
-            .modifier(ErrorModal(isPresented: $store.displayingErrorModal.sending(\.displayErrorModal),
-                                 errorDescription: store.errorText))
-            .navigationTitle(Views.Constants.navigationTitleFullList)
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
@@ -176,8 +176,10 @@ private extension Views {
         let store: StoreOf<CharactersListFeature>
         
         var body: some View {
-            ForEach(store.charactersToDisplay, id: \.id) { character in
-                CharacterListCell(store: store, character: character)
+            WithPerceptionTracking {
+                ForEach(store.charactersToDisplay, id: \.id) { character in
+                    CharacterListCell(store: store, character: character)
+                }
             }
         }
     }
@@ -239,34 +241,36 @@ private extension Views {
         ]
         
         var body: some View {
-            LazyVGrid(columns: columns) {
-                ForEach(store.charactersToDisplay, id: \.id) { character in
-                    Views.CharacterGridCell(store: store, character: character)
-//                        .background {
-//                            NavigationLink(
-//                                destination: CharacterDetailsView(character: character),
-//                                tag: character,
-//                                selection: $selectedCharacter,
-//                                label: {
-//                                    EmptyView()
-//                            })
-//                            .opacity(Views.Constants.navigationLinkOpacity)
-//                        }
-                        .onTapGesture {
-                            selectedCharacter = character
-                        }
+            WithPerceptionTracking {
+                LazyVGrid(columns: columns) {
+                    ForEach(store.charactersToDisplay, id: \.id) { character in
+                        Views.CharacterGridCell(store: store, character: character)
+    //                        .background {
+    //                            NavigationLink(
+    //                                destination: CharacterDetailsView(character: character),
+    //                                tag: character,
+    //                                selection: $selectedCharacter,
+    //                                label: {
+    //                                    EmptyView()
+    //                            })
+    //                            .opacity(Views.Constants.navigationLinkOpacity)
+    //                        }
+                            .onTapGesture {
+                                selectedCharacter = character
+                            }
+                    }
                 }
+                .padding(.top)
+                .listRowInsets(.init(
+                    top: Views.Constants.gridListRowInsetValue,
+                    leading: Views.Constants.gridListRowInsetValue,
+                    bottom: Views.Constants.gridListRowInsetValue,
+                    trailing: Views.Constants.gridListRowInsetValue
+                ))
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                .listSectionSeparator(.hidden)
             }
-            .padding(.top)
-            .listRowInsets(.init(
-                top: Views.Constants.gridListRowInsetValue,
-                leading: Views.Constants.gridListRowInsetValue,
-                bottom: Views.Constants.gridListRowInsetValue,
-                trailing: Views.Constants.gridListRowInsetValue
-            ))
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-            .listSectionSeparator(.hidden)
         }
     }
     
