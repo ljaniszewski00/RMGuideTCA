@@ -6,8 +6,8 @@ struct CharactersListView: View {
     
     var body: some View {
         WithPerceptionTracking {
-            if store.showCharactersList {
-                
+            if store.displayingCharactersList {
+                Views.CharactersView(store: store)
             } else {
                 Views.StartView(store: store)
             }
@@ -87,7 +87,7 @@ private extension Views {
                 Spacer()
                 
                 Button {
-                    store.send(.showCharactersListButtonTapped)
+                    store.send(.displayCharactersListButtonTapped)
                 } label: {
                     HStack {
                         Text(Views.Constants.buttonLabel)
@@ -105,5 +105,234 @@ private extension Views {
             }
             .padding()
         }
+    }
+    
+    struct CharactersView: View {
+        @Perception.Bindable var store: StoreOf<CharactersListFeature>
+        
+        var body: some View {
+//            WithPerceptionTracking {
+//                
+//            }
+            VStack {
+                List {
+                    switch store.displayingMode {
+                    case .list:
+                        Views.CharactersList(store: store)
+                    case .grid:
+                        Views.CharactersGrid(store: store)
+                    }
+                }
+                .listStyle(.plain)
+//                .refreshable {
+//                    await charactersListViewModel.onRefresh()
+//                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    let imageName: String = store.displayingMode == .grid ?
+                    CharactersListDisplayMode.list.displayModeIconName : CharactersListDisplayMode.grid.displayModeIconName
+                    
+                    Button {
+                        store.send(.changeDisplayModeButtonTapped)
+                    } label: {
+                        Image(systemName: imageName)
+                            .foregroundStyle(.gray)
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        store.send(.changeToFavoriteCharacters)
+                    } label: {
+                        let imageName: String = store.displayOnlyFavoriteCharacters ?
+                        Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName
+                        Image(systemName: imageName)
+                            .foregroundStyle(
+                                .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
+                            )
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        store.send(.exitCharactersListButtonTapped)
+                    } label: {
+                        Image(systemName: Views.Constants.exitButtonImageName)
+                            .foregroundStyle(.gray)
+                    }
+                }
+            }
+            .searchable(text: $store.searchText.sending(\.searchTextChanged))
+            .modifier(LoadingIndicatorModal(isPresented: $store.displayingLoadingModal.sending(\.displayLoadingModal)))
+            .modifier(ErrorModal(isPresented: $store.displayingErrorModal.sending(\.displayErrorModal),
+                                 errorDescription: store.errorText))
+            .navigationTitle(Views.Constants.navigationTitleFullList)
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    struct CharactersList: View {
+        let store: StoreOf<CharactersListFeature>
+        
+        var body: some View {
+            ForEach(store.charactersToDisplay, id: \.id) { character in
+                CharacterListCell(store: store, character: character)
+            }
+        }
+    }
+    
+    struct CharacterListCell: View {
+        let store: StoreOf<CharactersListFeature>
+        let character: RMCharacter
+        
+        var body: some View {
+//            let isFavorite: Bool = store.isCharacterFavorite(characterId: character.id)
+            let isFavorite: Bool = false
+            
+            NavigationLink {
+//                CharacterDetailsView(character: character)
+                CharacterDetailsView()
+            } label: {
+                HStack(spacing: Views.Constants.characterListCellOuterHStackSpacing) {
+                    AsyncImage(url: URL(string: character.image)) { image in
+                        image
+                            .listCharacterImageModifier()
+                    } placeholder: {
+                        Image(systemName: Views.Constants.imagePlaceholderName)
+                            .listCharacterImageModifier()
+                    }
+                    
+                    HStack(spacing: Views.Constants.characterListCellInnerHStackSpacing) {
+                        Text(character.name)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.leading)
+                        
+                        Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
+                            .resizable()
+                            .frame(width: Views.Constants.favoriteImageWidth,
+                                   height: Views.Constants.favoriteImageHeight)
+                            .foregroundStyle(
+                                .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
+                            )
+//                            .onTapGesture {
+//                                charactersListViewModel.manageCharacterToBeFavorite(characterId: character.id)
+//                            }
+                    }
+                    .padding([.top, .leading],
+                             Views.Constants.characterListCellOuterHStackPadding)
+                }
+            }
+
+        }
+    }
+    
+    struct CharactersGrid: View {
+        let store: StoreOf<CharactersListFeature>
+        
+        @State var selectedCharacter: RMCharacter?
+        
+        private let columns: [GridItem] = [
+            GridItem(.flexible(minimum: Views.Constants.gridItemMinimumSize)),
+            GridItem(.flexible(minimum: Views.Constants.gridItemMinimumSize))
+        ]
+        
+        var body: some View {
+            LazyVGrid(columns: columns) {
+                ForEach(store.charactersToDisplay, id: \.id) { character in
+                    Views.CharacterGridCell(store: store, character: character)
+//                        .background {
+//                            NavigationLink(
+//                                destination: CharacterDetailsView(character: character),
+//                                tag: character,
+//                                selection: $selectedCharacter,
+//                                label: {
+//                                    EmptyView()
+//                            })
+//                            .opacity(Views.Constants.navigationLinkOpacity)
+//                        }
+                        .onTapGesture {
+                            selectedCharacter = character
+                        }
+                }
+            }
+            .padding(.top)
+            .listRowInsets(.init(
+                top: Views.Constants.gridListRowInsetValue,
+                leading: Views.Constants.gridListRowInsetValue,
+                bottom: Views.Constants.gridListRowInsetValue,
+                trailing: Views.Constants.gridListRowInsetValue
+            ))
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+            .listSectionSeparator(.hidden)
+        }
+    }
+    
+    struct CharacterGridCell: View {
+        let store: StoreOf<CharactersListFeature>
+        let character: RMCharacter
+        
+        var body: some View {
+//            let isFavorite: Bool = store.isCharacterFavorite(characterId: character.id)
+            let isFavorite: Bool = false
+            
+            VStack(spacing: Views.Constants.characterGridCellVStackSpacing) {
+                ZStack(alignment: .topTrailing) {
+                    AsyncImage(url: URL(string: character.image)) { image in
+                        image
+                            .gridCharacterImageModifier()
+                    } placeholder: {
+                        Image(systemName: Views.Constants.imagePlaceholderName)
+                            .gridCharacterImageModifier()
+                    }
+                    
+                    Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
+                        .resizable()
+                        .frame(width: Views.Constants.favoriteImageWidth,
+                               height: Views.Constants.favoriteImageHeight)
+                        .foregroundStyle(
+                            .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
+                        )
+                        .padding(Views.Constants.favoriteImageBackgroundPadding)
+                        .background(
+                            .ultraThinMaterial,
+                            in: Circle()
+                        )
+//                        .onTapGesture {
+//                            charactersListViewModel.manageCharacterToBeFavorite(characterId: character.id)
+//                        }
+                        .offset(x: Views.Constants.favoriteImageXOffset)
+                }
+                
+                Text(character.name)
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+                    .padding(Views.Constants.characterNameBackgroundPadding)
+                    .padding(.horizontal, Views.Constants.characterNameHorizontalPadding)
+                    .background(
+                        .ultraThinMaterial,
+                        in: Capsule()
+                    )
+                    .offset(y: Views.Constants.characterNameYOffset)
+            }
+        }
+    }
+}
+
+private extension Image {
+    func listCharacterImageModifier() -> some View {
+        self.resizable()
+            .frame(width: Views.Constants.characterListCellImageSize,
+                   height: Views.Constants.characterListCellImageSize)
+            .clipShape(RoundedRectangle(cornerRadius: Views.Constants.characterListCellImageRadius))
+    }
+    
+    func gridCharacterImageModifier() -> some View {
+        self.resizable()
+            .frame(width: Views.Constants.characterGridCellImageSize,
+                   height: Views.Constants.characterGridCellImageSize)
+            .clipShape(Circle())
     }
 }
