@@ -4,6 +4,8 @@ import Foundation
 @Reducer
 struct CharactersListFeature {
     
+    @Dependency(\.getRMCharactersAPIClient) var getRMCharactersAPIClient
+    
     @ObservableState
     struct State: Equatable {
         var characters: [RMCharacter] = []
@@ -49,6 +51,8 @@ struct CharactersListFeature {
         case displayErrorModal(Bool)
         case displayLoadingModal(Bool)
         case exitCharactersListButtonTapped
+        case errorOccured(String)
+        case gotCharactersResponse([RMCharacter])
         case searchTextChanged(String)
     }
     
@@ -69,14 +73,53 @@ struct CharactersListFeature {
                 return .none
             case .displayCharactersListButtonTapped:
                 state.displayingCharactersList = true
-                return .none
+                
+                if state.displayingCharactersList {
+                    return .run { send in
+                        do {
+                            let getCharactersResult = await getRMCharacters()
+                            
+                            switch getCharactersResult {
+                            case .success(let characters):
+                                await send(.gotCharactersResponse(characters))
+                            case .failure(let error):
+                                await send(.errorOccured(error.localizedDescription))
+                            }
+                        } catch {
+                            
+                        }
+                    }
+                } else {
+                    state.characters.removeAll()
+                    return .none
+                }
             case .exitCharactersListButtonTapped:
                 state.displayingCharactersList = false
+                return .none
+            case let .errorOccured(error):
+                state.errorText = error
+                state.displayingErrorModal = true
+                return .none
+            case let .gotCharactersResponse(characters):
+                state.characters = characters
                 return .none
             case let .searchTextChanged(newText):
                 state.searchText = newText
                 return .none
             }
+        }
+    }
+    
+    private func getRMCharacters() async -> Result<[RMCharacter], Error> {
+        do {
+            return try await getRMCharactersAPIClient
+                .request(RickAndMortyEndpoints.character,
+                         requestInput: EmptyRequestInput())
+                .map {
+                    $0.results
+                }
+        } catch(let error) {
+            return .failure(error)
         }
     }
 }

@@ -18,7 +18,6 @@
 		1669B6FD2C76032100BB105F /* EpisodeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6FC2C76032100BB105F /* EpisodeDetailsView.swift */; };
 		1669B7032C7603A900BB105F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 1669B7022C7603A900BB105F /* ComposableArchitecture */; };
 		16CEACFD2C760FC10053A467 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEACFC2C760FC10053A467 /* Views.swift */; };
-		16CEAD162C7B3E8A0053A467 /* AnyAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEACFE2C7B3E8A0053A467 /* AnyAPIClient.swift */; };
 		16CEAD172C7B3E8A0053A467 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEACFF2C7B3E8A0053A467 /* APIClient.swift */; };
 		16CEAD182C7B3E8A0053A467 /* RMCharacterGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD012C7B3E8A0053A467 /* RMCharacterGender.swift */; };
 		16CEAD192C7B3E8A0053A467 /* RMCharacterLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD022C7B3E8A0053A467 /* RMCharacterLocation.swift */; };
@@ -37,13 +36,12 @@
 		16CEAD302C7B3FB90053A467 /* LoadingIndicatorModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD262C7B3FB90053A467 /* LoadingIndicatorModal.swift */; };
 		16CEAD312C7B3FB90053A467 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD282C7B3FB90053A467 /* Array+Extension.swift */; };
 		16CEAD322C7B3FB90053A467 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD292C7B3FB90053A467 /* Color+Extension.swift */; };
-		16CEAD332C7B3FB90053A467 /* Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD2A2C7B3FB90053A467 /* Container+Extension.swift */; };
 		16CEAD342C7B3FB90053A467 /* View+HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD2B2C7B3FB90053A467 /* View+HalfSheet.swift */; };
-		16CEAD352C7B3FB90053A467 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD2D2C7B3FB90053A467 /* Inject.swift */; };
 		16CEAD382C7B40720053A467 /* CharactersListDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD372C7B40720053A467 /* CharactersListDisplayMode.swift */; };
 		16CEAD3C2C7B502C0053A467 /* RMEpisodeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD3B2C7B502C0053A467 /* RMEpisodeObject.swift */; };
-		16CEAD3F2C7B98760053A467 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 16CEAD3E2C7B98760053A467 /* Swinject */; };
-		16CEAD422C7B98F20053A467 /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD412C7B98F20053A467 /* Assembler.swift */; };
+		16CEAD452C7C8FBD0053A467 /* APIClientDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD442C7C8FBD0053A467 /* APIClientDependency.swift */; };
+		16CEAD482C7C94B40053A467 /* RegisterAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD472C7C94B40053A467 /* RegisterAPIClient.swift */; };
+		16CEAD4A2C7CAD990053A467 /* APIClients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD492C7CAD990053A467 /* APIClients.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,7 +56,6 @@
 		1669B6FA2C76031100BB105F /* EpisodeDetailsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsReducer.swift; sourceTree = "<group>"; };
 		1669B6FC2C76032100BB105F /* EpisodeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsView.swift; sourceTree = "<group>"; };
 		16CEACFC2C760FC10053A467 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
-		16CEACFE2C7B3E8A0053A467 /* AnyAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyAPIClient.swift; sourceTree = "<group>"; };
 		16CEACFF2C7B3E8A0053A467 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		16CEAD012C7B3E8A0053A467 /* RMCharacterGender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMCharacterGender.swift; sourceTree = "<group>"; };
 		16CEAD022C7B3E8A0053A467 /* RMCharacterLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMCharacterLocation.swift; sourceTree = "<group>"; };
@@ -77,12 +74,12 @@
 		16CEAD262C7B3FB90053A467 /* LoadingIndicatorModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorModal.swift; sourceTree = "<group>"; };
 		16CEAD282C7B3FB90053A467 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		16CEAD292C7B3FB90053A467 /* Color+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
-		16CEAD2A2C7B3FB90053A467 /* Container+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Container+Extension.swift"; sourceTree = "<group>"; };
 		16CEAD2B2C7B3FB90053A467 /* View+HalfSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+HalfSheet.swift"; sourceTree = "<group>"; };
-		16CEAD2D2C7B3FB90053A467 /* Inject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inject.swift; sourceTree = "<group>"; };
 		16CEAD372C7B40720053A467 /* CharactersListDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListDisplayMode.swift; sourceTree = "<group>"; };
 		16CEAD3B2C7B502C0053A467 /* RMEpisodeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeObject.swift; sourceTree = "<group>"; };
-		16CEAD412C7B98F20053A467 /* Assembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembler.swift; sourceTree = "<group>"; };
+		16CEAD442C7C8FBD0053A467 /* APIClientDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientDependency.swift; sourceTree = "<group>"; };
+		16CEAD472C7C94B40053A467 /* RegisterAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAPIClient.swift; sourceTree = "<group>"; };
+		16CEAD492C7CAD990053A467 /* APIClients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClients.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +88,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1669B7032C7603A900BB105F /* ComposableArchitecture in Frameworks */,
-				16CEAD3F2C7B98760053A467 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +113,7 @@
 		1669B6DD2C75FF1700BB105F /* RMGuideTCA */ = {
 			isa = PBXGroup;
 			children = (
-				16CEAD402C7B98E40053A467 /* Assemblies */,
+				16CEAD402C7B98E40053A467 /* Dependencies */,
 				16CEAD392C7B501A0053A467 /* Cache */,
 				1669B6F12C76022C00BB105F /* Core */,
 				1669B6EC2C76014E00BB105F /* Features */,
@@ -178,9 +174,9 @@
 		1669B6F02C76021600BB105F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				16CEAD462C7C94AC0053A467 /* Functions */,
 				16CEAD2C2C7B3FB90053A467 /* Extensions */,
 				16CEAD272C7B3FB90053A467 /* HelperViews */,
-				16CEAD2E2C7B3FB90053A467 /* Structures */,
 				16CEACFB2C760FB70053A467 /* Enums */,
 			);
 			path = Utils;
@@ -200,15 +196,6 @@
 				16CEACFC2C760FC10053A467 /* Views.swift */,
 			);
 			path = Enums;
-			sourceTree = "<group>";
-		};
-		16CEAD002C7B3E8A0053A467 /* APIClient */ = {
-			isa = PBXGroup;
-			children = (
-				16CEACFE2C7B3E8A0053A467 /* AnyAPIClient.swift */,
-				16CEACFF2C7B3E8A0053A467 /* APIClient.swift */,
-			);
-			path = APIClient;
 			sourceTree = "<group>";
 		};
 		16CEAD052C7B3E8A0053A467 /* Components */ = {
@@ -281,7 +268,8 @@
 		16CEAD152C7B3E8A0053A467 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				16CEAD002C7B3E8A0053A467 /* APIClient */,
+				16CEACFF2C7B3E8A0053A467 /* APIClient.swift */,
+				16CEAD492C7CAD990053A467 /* APIClients.swift */,
 				16CEAD112C7B3E8A0053A467 /* APIEndpoints */,
 				16CEAD142C7B3E8A0053A467 /* Enums */,
 			);
@@ -302,18 +290,9 @@
 			children = (
 				16CEAD282C7B3FB90053A467 /* Array+Extension.swift */,
 				16CEAD292C7B3FB90053A467 /* Color+Extension.swift */,
-				16CEAD2A2C7B3FB90053A467 /* Container+Extension.swift */,
 				16CEAD2B2C7B3FB90053A467 /* View+HalfSheet.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		16CEAD2E2C7B3FB90053A467 /* Structures */ = {
-			isa = PBXGroup;
-			children = (
-				16CEAD2D2C7B3FB90053A467 /* Inject.swift */,
-			);
-			path = Structures;
 			sourceTree = "<group>";
 		};
 		16CEAD362C7B40650053A467 /* Components */ = {
@@ -340,20 +319,20 @@
 			path = Objects;
 			sourceTree = "<group>";
 		};
-		16CEAD402C7B98E40053A467 /* Assemblies */ = {
+		16CEAD402C7B98E40053A467 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				16CEAD432C7B99080053A467 /* Features */,
-				16CEAD412C7B98F20053A467 /* Assembler.swift */,
+				16CEAD442C7C8FBD0053A467 /* APIClientDependency.swift */,
 			);
-			path = Assemblies;
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
-		16CEAD432C7B99080053A467 /* Features */ = {
+		16CEAD462C7C94AC0053A467 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				16CEAD472C7C94B40053A467 /* RegisterAPIClient.swift */,
 			);
-			path = Features;
+			path = Functions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -374,7 +353,6 @@
 			name = RMGuideTCA;
 			packageProductDependencies = (
 				1669B7022C7603A900BB105F /* ComposableArchitecture */,
-				16CEAD3E2C7B98760053A467 /* Swinject */,
 			);
 			productName = RMGuideTCA;
 			productReference = 1669B6DB2C75FF1700BB105F /* RMGuideTCA.app */;
@@ -406,7 +384,6 @@
 			mainGroup = 1669B6D22C75FF1700BB105F;
 			packageReferences = (
 				1669B7012C7603A900BB105F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				16CEAD3D2C7B98760053A467 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = 1669B6DC2C75FF1700BB105F /* Products */;
 			projectDirPath = "";
@@ -439,8 +416,8 @@
 				1669B6FB2C76031100BB105F /* EpisodeDetailsReducer.swift in Sources */,
 				1669B6F32C7602DC00BB105F /* CharacterDetailsReducer.swift in Sources */,
 				1669B6F92C76030600BB105F /* CharactersListView.swift in Sources */,
+				16CEAD452C7C8FBD0053A467 /* APIClientDependency.swift in Sources */,
 				16CEAD172C7B3E8A0053A467 /* APIClient.swift in Sources */,
-				16CEAD162C7B3E8A0053A467 /* AnyAPIClient.swift in Sources */,
 				16CEAD222C7B3E8A0053A467 /* APIEndpoint.swift in Sources */,
 				1669B6DF2C75FF1700BB105F /* RMGuideTCAApp.swift in Sources */,
 				16CEAD342C7B3FB90053A467 /* View+HalfSheet.swift in Sources */,
@@ -449,15 +426,15 @@
 				16CEAD312C7B3FB90053A467 /* Array+Extension.swift in Sources */,
 				16CEAD182C7B3E8A0053A467 /* RMCharacterGender.swift in Sources */,
 				16CEAD1C2C7B3E8A0053A467 /* RMCharacter.swift in Sources */,
+				16CEAD482C7C94B40053A467 /* RegisterAPIClient.swift in Sources */,
 				16CEAD3C2C7B502C0053A467 /* RMEpisodeObject.swift in Sources */,
-				16CEAD422C7B98F20053A467 /* Assembler.swift in Sources */,
 				1669B6FD2C76032100BB105F /* EpisodeDetailsView.swift in Sources */,
 				16CEAD1E2C7B3E8A0053A467 /* EmptyRequestInput.swift in Sources */,
 				16CEAD212C7B3E8A0053A467 /* RickAndMortyEndpoints.swift in Sources */,
 				16CEAD1F2C7B3E8A0053A467 /* RMInfo.swift in Sources */,
 				16CEAD1A2C7B3E8A0053A467 /* RMCharacterOrigin.swift in Sources */,
 				16CEAD382C7B40720053A467 /* CharactersListDisplayMode.swift in Sources */,
-				16CEAD352C7B3FB90053A467 /* Inject.swift in Sources */,
+				16CEAD4A2C7CAD990053A467 /* APIClients.swift in Sources */,
 				16CEAD322C7B3FB90053A467 /* Color+Extension.swift in Sources */,
 				16CEAD302C7B3FB90053A467 /* LoadingIndicatorModal.swift in Sources */,
 				16CEAD192C7B3E8A0053A467 /* RMCharacterLocation.swift in Sources */,
@@ -466,7 +443,6 @@
 				16CEAD242C7B3E8A0053A467 /* HTTPMethod.swift in Sources */,
 				16CEAD1D2C7B3E8A0053A467 /* RMCharacterResponse.swift in Sources */,
 				16CEAD232C7B3E8A0053A467 /* APIError.swift in Sources */,
-				16CEAD332C7B3FB90053A467 /* Container+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,14 +666,6 @@
 				minimumVersion = 1.13.0;
 			};
 		};
-		16CEAD3D2C7B98760053A467 /* XCRemoteSwiftPackageReference "Swinject" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swinject/Swinject.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -705,11 +673,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1669B7012C7603A900BB105F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		16CEAD3E2C7B98760053A467 /* Swinject */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16CEAD3D2C7B98760053A467 /* XCRemoteSwiftPackageReference "Swinject" */;
-			productName = Swinject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
