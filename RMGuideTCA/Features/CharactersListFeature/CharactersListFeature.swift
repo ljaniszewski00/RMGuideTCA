@@ -17,6 +17,9 @@ struct CharactersListFeature {
         var displayingErrorModal: Bool = false
         var errorText: String = ""
         
+        @Presents var destination: Destination.State?
+        var path = StackState<Path.State>()
+        
         var searchText: String = ""
         
         var charactersToDisplay: [RMCharacter] {
@@ -44,15 +47,18 @@ struct CharactersListFeature {
         }
     }
     
-    enum Action: Equatable {
+    enum Action {
         case changeDisplayModeButtonTapped
         case changeToFavoriteCharacters
+        case destination(PresentationAction<Destination.Action>)
+        case displayCharacterDetailsButtonTapped(RMCharacter)
         case displayCharactersListButtonTapped
         case displayErrorModal(Bool)
         case displayLoadingModal(Bool)
         case exitCharactersListButtonTapped
         case errorOccured(String)
         case gotCharactersResponse([RMCharacter])
+        case path(StackActionOf<Path>)
         case searchTextChanged(String)
     }
     
@@ -70,6 +76,12 @@ struct CharactersListFeature {
                 return .none
             case let .displayLoadingModal(toBeDisplayed):
                 state.displayingLoadingModal = toBeDisplayed
+                return .none
+            case let .displayCharacterDetailsButtonTapped(character):
+                state.destination = .characterDetails(
+                    CharacterDetailsFeature.State(character: character)
+                )
+                
                 return .none
             case .displayCharactersListButtonTapped:
                 state.displayingCharactersList = true
@@ -106,8 +118,14 @@ struct CharactersListFeature {
             case let .searchTextChanged(newText):
                 state.searchText = newText
                 return .none
+            case .destination:
+                return .none
+            case .path:
+                return .none
             }
         }
+        .ifLet(\.$destination, action: \.destination)
+        .forEach(\.path, action: \.path)
     }
     
     private func getRMCharacters() async -> Result<[RMCharacter], Error> {
@@ -121,5 +139,17 @@ struct CharactersListFeature {
         } catch(let error) {
             return .failure(error)
         }
+    }
+}
+
+extension CharactersListFeature {
+    @Reducer(state: .equatable)
+    enum Destination {
+        case characterDetails(CharacterDetailsFeature)
+    }
+    
+    @Reducer(state: .equatable)
+    enum Path {
+        case characterDetails(CharacterDetailsFeature)
     }
 }

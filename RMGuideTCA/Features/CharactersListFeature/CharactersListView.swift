@@ -5,11 +5,18 @@ struct CharactersListView: View {
     @Perception.Bindable var store: StoreOf<CharactersListFeature>
     
     var body: some View {
-        WithPerceptionTracking {
-            if store.displayingCharactersList {
-                Views.CharactersView(store: store)
-            } else {
-                Views.StartView(store: store)
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+            WithPerceptionTracking {
+                if store.displayingCharactersList {
+                    Views.CharactersView(store: store)
+                } else {
+                    Views.StartView(store: store)
+                }
+            }
+        } destination: { store in
+            switch store.case {
+            case .characterDetails(let store):
+                CharacterDetailsView(store: store)
             }
         }
     }
@@ -192,41 +199,45 @@ private extension Views {
 //            let isFavorite: Bool = store.isCharacterFavorite(characterId: character.id)
             let isFavorite: Bool = false
             
-            NavigationLink {
-//                CharacterDetailsView(character: character)
-                CharacterDetailsView()
-            } label: {
-                HStack(spacing: Views.Constants.characterListCellOuterHStackSpacing) {
-                    AsyncImage(url: URL(string: character.image)) { image in
-                        image
-                            .listCharacterImageModifier()
-                    } placeholder: {
-                        Image(systemName: Views.Constants.imagePlaceholderName)
-                            .listCharacterImageModifier()
-                    }
-                    
-                    HStack(spacing: Views.Constants.characterListCellInnerHStackSpacing) {
-                        Text(character.name)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .multilineTextAlignment(.leading)
+            WithPerceptionTracking {
+                NavigationLink (
+                    state: CharactersListFeature.Path.State.characterDetails(
+                        CharacterDetailsFeature.State(
+                            character: character
+                        )
+                    )
+                ) {
+                    HStack(spacing: Views.Constants.characterListCellOuterHStackSpacing) {
+                        AsyncImage(url: URL(string: character.image)) { image in
+                            image
+                                .listCharacterImageModifier()
+                        } placeholder: {
+                            Image(systemName: Views.Constants.imagePlaceholderName)
+                                .listCharacterImageModifier()
+                        }
                         
-                        Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
-                            .resizable()
-                            .frame(width: Views.Constants.favoriteImageWidth,
-                                   height: Views.Constants.favoriteImageHeight)
-                            .foregroundStyle(
-                                .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
-                            )
-//                            .onTapGesture {
-//                                charactersListViewModel.manageCharacterToBeFavorite(characterId: character.id)
-//                            }
+                        HStack(spacing: Views.Constants.characterListCellInnerHStackSpacing) {
+                            Text(character.name)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .multilineTextAlignment(.leading)
+                            
+                            Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
+                                .resizable()
+                                .frame(width: Views.Constants.favoriteImageWidth,
+                                       height: Views.Constants.favoriteImageHeight)
+                                .foregroundStyle(
+                                    .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
+                                )
+    //                            .onTapGesture {
+    //                                charactersListViewModel.manageCharacterToBeFavorite(characterId: character.id)
+    //                            }
+                        }
+                        .padding([.top, .leading],
+                                 Views.Constants.characterListCellOuterHStackPadding)
                     }
-                    .padding([.top, .leading],
-                             Views.Constants.characterListCellOuterHStackPadding)
                 }
             }
-
         }
     }
     

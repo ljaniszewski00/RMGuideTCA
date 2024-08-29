@@ -5,16 +5,14 @@ import SwiftUI
 struct RMGuideTCAApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                CharactersListView(
-                    store: Store(
-                        initialState: CharactersListFeature.State(),
-                        reducer: {
-                            CharactersListFeature()
-                        }
-                    )
+            CharactersListView(
+                store: Store(
+                    initialState: CharactersListFeature.State(),
+                    reducer: {
+                        CharactersListFeature()
+                    }
                 )
-            }
+            )
         }
     }
 }
