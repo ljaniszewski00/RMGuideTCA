@@ -256,16 +256,23 @@ private extension Views {
                 LazyVGrid(columns: columns) {
                     ForEach(store.charactersToDisplay, id: \.id) { character in
                         Views.CharacterGridCell(store: store, character: character)
-    //                        .background {
-    //                            NavigationLink(
-    //                                destination: CharacterDetailsView(character: character),
-    //                                tag: character,
-    //                                selection: $selectedCharacter,
-    //                                label: {
-    //                                    EmptyView()
-    //                            })
-    //                            .opacity(Views.Constants.navigationLinkOpacity)
-    //                        }
+                            .background {
+                                NavigationLink(
+                                    destination: CharacterDetailsView(
+                                        store:
+                                            Store(
+                                                initialState: CharacterDetailsFeature.State(character: character),
+                                                reducer: {
+                                                    CharacterDetailsFeature()
+                                                }
+                                            )),
+                                    tag: character,
+                                    selection: $selectedCharacter,
+                                    label: {
+                                        EmptyView()
+                                })
+                                .opacity(Views.Constants.navigationLinkOpacity)
+                            }
                             .onTapGesture {
                                 selectedCharacter = character
                             }
