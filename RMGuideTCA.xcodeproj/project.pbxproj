@@ -17,6 +17,8 @@
 		1669B6FB2C76031100BB105F /* EpisodeDetailsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6FA2C76031100BB105F /* EpisodeDetailsReducer.swift */; };
 		1669B6FD2C76032100BB105F /* EpisodeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6FC2C76032100BB105F /* EpisodeDetailsView.swift */; };
 		1669B7032C7603A900BB105F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 1669B7022C7603A900BB105F /* ComposableArchitecture */; };
+		168969582C834C2600175278 /* AppStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168969572C834C2600175278 /* AppStorageKey.swift */; };
+		1689695B2C83536200175278 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 1689695A2C83536200175278 /* Algorithms */; };
 		16CEACFD2C760FC10053A467 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEACFC2C760FC10053A467 /* Views.swift */; };
 		16CEAD172C7B3E8A0053A467 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEACFF2C7B3E8A0053A467 /* APIClient.swift */; };
 		16CEAD182C7B3E8A0053A467 /* RMCharacterGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEAD012C7B3E8A0053A467 /* RMCharacterGender.swift */; };
@@ -55,6 +57,7 @@
 		1669B6F82C76030600BB105F /* CharactersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListView.swift; sourceTree = "<group>"; };
 		1669B6FA2C76031100BB105F /* EpisodeDetailsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsReducer.swift; sourceTree = "<group>"; };
 		1669B6FC2C76032100BB105F /* EpisodeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsView.swift; sourceTree = "<group>"; };
+		168969572C834C2600175278 /* AppStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKey.swift; sourceTree = "<group>"; };
 		16CEACFC2C760FC10053A467 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		16CEACFF2C7B3E8A0053A467 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		16CEAD012C7B3E8A0053A467 /* RMCharacterGender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RMCharacterGender.swift; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1689695B2C83536200175278 /* Algorithms in Frameworks */,
 				1669B7032C7603A900BB105F /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,9 +189,18 @@
 		1669B6F12C76022C00BB105F /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				168969562C834C1D00175278 /* AppStorage */,
 				16CEAD152C7B3E8A0053A467 /* Networking */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		168969562C834C1D00175278 /* AppStorage */ = {
+			isa = PBXGroup;
+			children = (
+				168969572C834C2600175278 /* AppStorageKey.swift */,
+			);
+			path = AppStorage;
 			sourceTree = "<group>";
 		};
 		16CEACFB2C760FB70053A467 /* Enums */ = {
@@ -353,6 +366,7 @@
 			name = RMGuideTCA;
 			packageProductDependencies = (
 				1669B7022C7603A900BB105F /* ComposableArchitecture */,
+				1689695A2C83536200175278 /* Algorithms */,
 			);
 			productName = RMGuideTCA;
 			productReference = 1669B6DB2C75FF1700BB105F /* RMGuideTCA.app */;
@@ -384,6 +398,7 @@
 			mainGroup = 1669B6D22C75FF1700BB105F;
 			packageReferences = (
 				1669B7012C7603A900BB105F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				168969592C83536200175278 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = 1669B6DC2C75FF1700BB105F /* Products */;
 			projectDirPath = "";
@@ -417,6 +432,7 @@
 				1669B6F32C7602DC00BB105F /* CharacterDetailsFeature.swift in Sources */,
 				1669B6F92C76030600BB105F /* CharactersListView.swift in Sources */,
 				16CEAD452C7C8FBD0053A467 /* APIClientDependency.swift in Sources */,
+				168969582C834C2600175278 /* AppStorageKey.swift in Sources */,
 				16CEAD172C7B3E8A0053A467 /* APIClient.swift in Sources */,
 				16CEAD222C7B3E8A0053A467 /* APIEndpoint.swift in Sources */,
 				1669B6DF2C75FF1700BB105F /* RMGuideTCAApp.swift in Sources */,
@@ -666,6 +682,14 @@
 				minimumVersion = 1.13.0;
 			};
 		};
+		168969592C83536200175278 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -673,6 +697,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1669B7012C7603A900BB105F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		1689695A2C83536200175278 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 168969592C83536200175278 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

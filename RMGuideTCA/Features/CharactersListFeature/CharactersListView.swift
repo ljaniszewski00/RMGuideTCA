@@ -148,7 +148,7 @@ private extension Views {
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            store.send(.changeToFavoriteCharacters)
+                            store.send(.displayFavoriteCharactersButtonTapped)
                         } label: {
                             let imageName: String = store.displayingOnlyFavoriteCharacters ?
                             Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName
@@ -195,10 +195,11 @@ private extension Views {
         let store: StoreOf<CharactersListFeature>
         let character: RMCharacter
         
+        var isFavorite: Bool {
+            store.favoriteCharactersIds.contains(character.id)
+        }
+        
         var body: some View {
-//            let isFavorite: Bool = store.isCharacterFavorite(characterId: character.id)
-            let isFavorite: Bool = false
-            
             WithPerceptionTracking {
                 NavigationLink (
                     state: CharactersListFeature.Path.State.characterDetails(
@@ -229,9 +230,9 @@ private extension Views {
                                 .foregroundStyle(
                                     .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
                                 )
-    //                            .onTapGesture {
-    //                                charactersListViewModel.manageCharacterToBeFavorite(characterId: character.id)
-    //                            }
+                                .onTapGesture {
+                                    store.send(.favoriteButtonTapped(character.id))
+                                }
                         }
                         .padding([.top, .leading],
                                  Views.Constants.characterListCellOuterHStackPadding)
@@ -296,10 +297,11 @@ private extension Views {
         let store: StoreOf<CharactersListFeature>
         let character: RMCharacter
         
+        var isFavorite: Bool {
+            store.favoriteCharactersIds.contains(character.id)
+        }
+        
         var body: some View {
-//            let isFavorite: Bool = store.isCharacterFavorite(characterId: character.id)
-            let isFavorite: Bool = false
-            
             VStack(spacing: Views.Constants.characterGridCellVStackSpacing) {
                 ZStack(alignment: .topTrailing) {
                     AsyncImage(url: URL(string: character.image)) { image in
@@ -322,9 +324,9 @@ private extension Views {
                             .ultraThinMaterial,
                             in: Circle()
                         )
-//                        .onTapGesture {
-//                            charactersListViewModel.manageCharacterToBeFavorite(characterId: character.id)
-//                        }
+                        .onTapGesture {
+                            store.send(.favoriteButtonTapped(character.id))
+                        }
                         .offset(x: Views.Constants.favoriteImageXOffset)
                 }
                 

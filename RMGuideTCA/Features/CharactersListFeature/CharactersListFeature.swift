@@ -1,3 +1,4 @@
+import Algorithms
 import ComposableArchitecture
 import Foundation
 
@@ -17,6 +18,8 @@ struct CharactersListFeature {
         var displayingErrorModal: Bool = false
         var errorText: String = ""
         
+        @Shared(.appStorage(AppStorageKey.favoriteCharacters.rawValue)) var favoriteCharactersIds: [Int] = []
+        
         @Presents var destination: Destination.State?
         var path = StackState<Path.State>()
         
@@ -32,16 +35,12 @@ struct CharactersListFeature {
                     }
             }
             
-//            if displayOnlyFavoriteCharacters {
-//                guard let favoriteCharactersIds = favoriteCharactersManager.getData() else {
-//                    return charactersToDisplay
-//                }
-//                
-//                charactersToDisplay = charactersToDisplay
-//                    .filter { characterToDisplay in
-//                        favoriteCharactersIds.contains(characterToDisplay.id)
-//                    }
-//            }
+            if displayingOnlyFavoriteCharacters {
+                charactersToDisplay = charactersToDisplay
+                    .filter { characterToDisplay in
+                        favoriteCharactersIds.contains(characterToDisplay.id)
+                    }
+            }
             
             return charactersToDisplay
         }
@@ -49,14 +48,15 @@ struct CharactersListFeature {
     
     enum Action {
         case changeDisplayModeButtonTapped
-        case changeToFavoriteCharacters
         case destination(PresentationAction<Destination.Action>)
         case displayCharacterDetailsButtonTapped(RMCharacter)
         case displayCharactersListButtonTapped
         case displayErrorModal(Bool)
+        case displayFavoriteCharactersButtonTapped
         case displayLoadingModal(Bool)
         case exitCharactersListButtonTapped
         case errorOccured(String)
+        case favoriteButtonTapped(Int)
         case gotCharactersResponse([RMCharacter])
         case path(StackActionOf<Path>)
         case searchTextChanged(String)
@@ -68,11 +68,11 @@ struct CharactersListFeature {
             case .changeDisplayModeButtonTapped:
                 state.displayingMode = (state.displayingMode == .grid ? .list : .grid)
                 return .none
-            case .changeToFavoriteCharacters:
-                state.displayingOnlyFavoriteCharacters.toggle()
-                return .none
             case let .displayErrorModal(toBeDisplayed):
                 state.displayingErrorModal = toBeDisplayed
+                return .none
+            case .displayFavoriteCharactersButtonTapped:
+                state.displayingOnlyFavoriteCharacters.toggle()
                 return .none
             case let .displayLoadingModal(toBeDisplayed):
                 state.displayingLoadingModal = toBeDisplayed
@@ -111,6 +111,20 @@ struct CharactersListFeature {
             case let .errorOccured(error):
                 state.errorText = error
                 state.displayingErrorModal = true
+                return .none
+            case let .favoriteButtonTapped(characterId):
+                var newFavoriteCharactersIds = state.favoriteCharactersIds
+                if newFavoriteCharactersIds.contains(characterId) {
+                    guard let indexToBeRemoved = newFavoriteCharactersIds.firstIndex(of: characterId) else {
+                        newFavoriteCharactersIds.append(characterId)
+                        return .none
+                    }
+                    newFavoriteCharactersIds.remove(at: indexToBeRemoved)
+                } else {
+                    newFavoriteCharactersIds.append(characterId)
+                }
+                state.favoriteCharactersIds = newFavoriteCharactersIds
+                
                 return .none
             case let .gotCharactersResponse(characters):
                 state.characters = characters
