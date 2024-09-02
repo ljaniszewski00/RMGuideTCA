@@ -168,7 +168,7 @@ private extension Views {
                         episodeNumberString: store.selectedEpisodeNumber ?? ""
                     )
                 }
-            } 
+            }
         }
         
         private func getEpisodeNumber(from episodeURLString: String) -> String? {

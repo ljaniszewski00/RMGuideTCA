@@ -12,8 +12,8 @@ struct CharacterDetailsFeature {
     }
     
     enum Action: Equatable {
-        case episodeButtonTapped(String)
         case displayEpisodeDetails(Bool)
+        case episodeButtonTapped(String)
     }
     
     var body: some ReducerOf<Self> {
@@ -24,6 +24,7 @@ struct CharacterDetailsFeature {
                 return .none
             case let .episodeButtonTapped(episodeNumberString):
                 state.selectedEpisodeNumber = episodeNumberString
+                state.displayingEpisodeDetailsView = true
                 return .none
                 
             }
