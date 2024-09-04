@@ -189,7 +189,7 @@ private extension Views {
     }
     
     struct CharacterListCell: View {
-        let store: StoreOf<CharactersListFeature>
+        var store: StoreOf<CharactersListFeature>
         let character: RMCharacter
         
         var isFavorite: Bool {
@@ -291,7 +291,7 @@ private extension Views {
     }
     
     struct CharacterGridCell: View {
-        let store: StoreOf<CharactersListFeature>
+        var store: StoreOf<CharactersListFeature>
         let character: RMCharacter
         
         var isFavorite: Bool {
@@ -299,44 +299,46 @@ private extension Views {
         }
         
         var body: some View {
-            VStack(spacing: Views.Constants.characterGridCellVStackSpacing) {
-                ZStack(alignment: .topTrailing) {
-                    AsyncImage(url: URL(string: character.image)) { image in
-                        image
-                            .gridCharacterImageModifier()
-                    } placeholder: {
-                        Image(systemName: Views.Constants.imagePlaceholderName)
-                            .gridCharacterImageModifier()
+            WithPerceptionTracking {
+                VStack(spacing: Views.Constants.characterGridCellVStackSpacing) {
+                    ZStack(alignment: .topTrailing) {
+                        AsyncImage(url: URL(string: character.image)) { image in
+                            image
+                                .gridCharacterImageModifier()
+                        } placeholder: {
+                            Image(systemName: Views.Constants.imagePlaceholderName)
+                                .gridCharacterImageModifier()
+                        }
+                        
+                        Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
+                            .resizable()
+                            .frame(width: Views.Constants.favoriteImageWidth,
+                                   height: Views.Constants.favoriteImageHeight)
+                            .foregroundStyle(
+                                .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
+                            )
+                            .padding(Views.Constants.favoriteImageBackgroundPadding)
+                            .background(
+                                .ultraThinMaterial,
+                                in: Circle()
+                            )
+                            .onTapGesture {
+                                store.send(.favoriteButtonTapped(character.id))
+                            }
+                            .offset(x: Views.Constants.favoriteImageXOffset)
                     }
                     
-                    Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
-                        .resizable()
-                        .frame(width: Views.Constants.favoriteImageWidth,
-                               height: Views.Constants.favoriteImageHeight)
-                        .foregroundStyle(
-                            .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
-                        )
-                        .padding(Views.Constants.favoriteImageBackgroundPadding)
+                    Text(character.name)
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                        .padding(Views.Constants.characterNameBackgroundPadding)
+                        .padding(.horizontal, Views.Constants.characterNameHorizontalPadding)
                         .background(
                             .ultraThinMaterial,
-                            in: Circle()
+                            in: Capsule()
                         )
-                        .onTapGesture {
-                            store.send(.favoriteButtonTapped(character.id))
-                        }
-                        .offset(x: Views.Constants.favoriteImageXOffset)
+                        .offset(y: Views.Constants.characterNameYOffset)
                 }
-                
-                Text(character.name)
-                    .font(.headline)
-                    .multilineTextAlignment(.center)
-                    .padding(Views.Constants.characterNameBackgroundPadding)
-                    .padding(.horizontal, Views.Constants.characterNameHorizontalPadding)
-                    .background(
-                        .ultraThinMaterial,
-                        in: Capsule()
-                    )
-                    .offset(y: Views.Constants.characterNameYOffset)
             }
         }
     }
