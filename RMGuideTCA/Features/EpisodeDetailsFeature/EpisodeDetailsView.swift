@@ -1,13 +1,21 @@
+import ComposableArchitecture
 import SwiftUI
 
 struct EpisodeDetailsView: View {
-    let episodeNumberString: String
+    @Perception.Bindable var store: StoreOf<EpisodeDetailsFeature>
     
     var body: some View {
-        Text(episodeNumberString)
+        Text(store.episodeNumberString)
     }
 }
 
 #Preview {
-    EpisodeDetailsView(episodeNumberString: "6")
+    EpisodeDetailsView(
+        store: Store(
+            initialState: EpisodeDetailsFeature.State(episode: .sampleEpisode, episodeNumberString: "1"),
+            reducer: {
+                EpisodeDetailsFeature()
+            }
+        )
+    )
 }

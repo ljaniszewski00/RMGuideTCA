@@ -86,15 +86,15 @@ struct CharacterDetailsView: View {
             .navigationTitle(store.character.name.components(separatedBy: " ").first ?? "")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-    //                let isFavorite: Bool = characterDetailsViewModel.isCharacterFavorite
-    //                Button {
-    //                    characterDetailsViewModel.manageCharacterToBeFavorite()
-    //                } label: {
-    //                    Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
-    //                        .foregroundStyle(
-    //                            .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
-    //                        )
-    //                }
+                    let isFavorite: Bool = store.isCharacterFavorite
+                    Button {
+                        store.send(.favoriteButtonTapped)
+                    } label: {
+                        Image(systemName: isFavorite ? Views.Constants.favoriteImageName : Views.Constants.nonFavoriteImageName)
+                            .foregroundStyle(
+                                .red.opacity(Views.Constants.favoriteButtonImageColorOpacity)
+                            )
+                    }
                 }
             }
         }
@@ -165,7 +165,12 @@ private extension Views {
                 }
                 .halfSheet(showSheet: $store.displayingEpisodeDetailsView.sending(\.displayEpisodeDetails)) {
                     EpisodeDetailsView(
-                        episodeNumberString: store.selectedEpisodeNumber ?? ""
+                        store: Store(
+                            initialState: EpisodeDetailsFeature.State(episodeNumberString: store.selectedEpisodeNumber ?? ""),
+                            reducer: {
+                                EpisodeDetailsFeature()
+                            }
+                        )
                     )
                 }
             }

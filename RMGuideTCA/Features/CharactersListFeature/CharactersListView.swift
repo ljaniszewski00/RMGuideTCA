@@ -129,9 +129,6 @@ private extension Views {
                         }
                     }
                     .listStyle(.plain)
-    //                .refreshable {
-    //                    await charactersListViewModel.onRefresh()
-    //                }
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
