@@ -13,6 +13,8 @@ struct RMGuideTCAApp: App {
                     }
                 )
             )
+            .tint(.red)
+            .accentColor(.red)
         }
     }
 }
