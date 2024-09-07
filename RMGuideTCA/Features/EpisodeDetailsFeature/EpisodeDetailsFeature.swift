@@ -15,15 +15,17 @@ struct EpisodeDetailsFeature {
         var displayingErrorModal: Bool = false
         var errorText: String = ""
         
-        @Shared(.inMemory(AppStorageKey.episodeDetails.rawValue)) var episodeDetails: RMEpisode?
+        @Shared(.inMemory(AppStorageKey.episodeDetails.rawValue)) var cachedEpisodesDetails: [RMEpisode] = []
     }
     
     enum Action: Equatable {
         case displayErrorModal(Bool)
         case displayLoadingModal(Bool)
         case errorOccured(String)
+        case gotEpisodeDetailsFromCache(RMEpisode)
         case gotEpisodeDetailsResponse(RMEpisode)
         case onAppear
+        case saveEpisodeDetailsToCache(RMEpisode)
     }
     
     var body: some ReducerOf<Self> {
@@ -39,29 +41,47 @@ struct EpisodeDetailsFeature {
                 state.errorText = error
                 state.displayingErrorModal = true
                 return .none
+            case let .gotEpisodeDetailsFromCache(episodeDetails):
+                state.episode = episodeDetails
+                return .none
             case let .gotEpisodeDetailsResponse(episodeDetails):
                 state.episode = episodeDetails
                 return .none
             case .onAppear:
-                return .run { [episodeNumberString = state.episodeNumberString] send in
-                    do {
-                        let getEpisodeDetailsResult = await getEpisodeDetails(
-                            episodeNumberString: episodeNumberString
-                        )
-                        
-                        switch getEpisodeDetailsResult {
-                        case .success(let episodeDetails):
-                            print()
-                            print(episodeDetails)
-                            print()
-                            await send(.gotEpisodeDetailsResponse(episodeDetails))
-                        case .failure(let error):
-                            await send(.errorOccured(error.localizedDescription))
+                return .run { [
+                    cachedEpisodesDetails = state.cachedEpisodesDetails,
+                    episodeNumberString = state.episodeNumberString
+                ] send in
+                    if let cachedEpisodeDetails = getEpisodeDetailsFromCache(
+                        cachedEpisodesDetails: cachedEpisodesDetails,
+                        episodeNumberString: episodeNumberString
+                    ) {
+                        await send(.gotEpisodeDetailsFromCache(cachedEpisodeDetails))
+                    } else {
+                        do {
+                            let getEpisodeDetailsResult = await getEpisodeDetails(
+                                episodeNumberString: episodeNumberString
+                            )
+                            
+                            switch getEpisodeDetailsResult {
+                            case .success(let episodeDetails):
+                                await send(.gotEpisodeDetailsResponse(episodeDetails))
+                                await send(.saveEpisodeDetailsToCache(episodeDetails))
+                            case .failure(let error):
+                                await send(.errorOccured(error.localizedDescription))
+                            }
+                        } catch {
+                            
                         }
-                    } catch {
-                        
                     }
                 }
+            case let .saveEpisodeDetailsToCache(episodeDetails):
+                guard !state.cachedEpisodesDetails.contains(episodeDetails) else {
+                    return .none
+                }
+                
+                state.cachedEpisodesDetails.append(episodeDetails)
+                return .none
             }
         }
     }
@@ -75,5 +95,16 @@ struct EpisodeDetailsFeature {
         } catch(let error) {
             return .failure(error)
         }
+    }
+    
+    private func getEpisodeDetailsFromCache(cachedEpisodesDetails: [RMEpisode], episodeNumberString: String) -> RMEpisode? {
+        guard !cachedEpisodesDetails.isEmpty,
+              let episodeId = Int(episodeNumberString) else {
+            return nil
+        }
+        
+        return cachedEpisodesDetails.first(where: {
+            $0.id == episodeId
+        })
     }
 }
