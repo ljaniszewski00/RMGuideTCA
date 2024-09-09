@@ -15,7 +15,7 @@
 Rick and Morthy guide app!  
 It utilises open [Rick and Morty API](https://rickandmortyapi.com/documentation/#introduction) to display information about characters and episodes from the TV series.
 
-## Technologies and solutions
+## Technologies and functionalities
 * Swift (SwiftUI)
 * Xcode 15.4
 * [TCA architecture](https://github.com/pointfreeco/swift-composable-architecture)
