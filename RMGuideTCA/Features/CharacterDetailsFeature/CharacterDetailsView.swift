@@ -163,7 +163,7 @@ private extension Views {
                         }
                     }
                 }
-                .halfSheet(showSheet: $store.displayingEpisodeDetailsView.sending(\.displayEpisodeDetails)) {
+                .sheet(isPresented: $store.displayingEpisodeDetailsView.sending(\.displayEpisodeDetails)) {
                     EpisodeDetailsView(
                         store: Store(
                             initialState: EpisodeDetailsFeature.State(episodeNumberString: store.selectedEpisodeNumber ?? ""),
@@ -172,6 +172,7 @@ private extension Views {
                             }
                         )
                     )
+                    .presentationDetents([.medium])
                 }
             }
         }
