@@ -5,7 +5,7 @@ import Foundation
 @Reducer
 struct CharactersListFeature {
     
-    @Dependency(\.getRMCharactersAPIClient) var getRMCharactersAPIClient
+    @Dependency(\.apiClient) var apiClient
     
     @ObservableState
     struct State: Equatable {
@@ -139,12 +139,8 @@ struct CharactersListFeature {
     
     private func getRMCharacters() async -> Result<[RMCharacter], Error> {
         do {
-            return try await getRMCharactersAPIClient
-                .request(RickAndMortyEndpoints.character,
-                         requestInput: EmptyRequestInput())
-                .map {
-                    $0.results
-                }
+            return try await apiClient
+                .makeCharactersRequest()
         } catch(let error) {
             return .failure(error)
         }

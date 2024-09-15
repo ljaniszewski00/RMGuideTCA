@@ -51,13 +51,9 @@ final class CharactersListFeatureTests: XCTestCase {
     func test_displayCharactersListButtonTapped() async {
         let store = TestStore(initialState: CharactersListFeature.State()) {
             CharactersListFeature()
-        } withDependencies: {
-            $0.getRMCharactersAPIClient = DependencyValues.test.getRMCharactersAPIClient
         }
         
-        print()
-        print(DependencyValues.test.getRMCharactersAPIClient)
-        print(store.dependencies.getRMCharactersAPIClient)
+        store.dependencies.apiClient = .testValue
         
         XCTAssertTrue(store.state.characters.isEmpty)
 

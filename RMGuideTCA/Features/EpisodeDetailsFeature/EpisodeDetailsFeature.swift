@@ -4,7 +4,7 @@ import Foundation
 @Reducer
 struct EpisodeDetailsFeature {
     
-    @Dependency(\.getRMEpisodeDetailsAPIClient) var getRMEpisodeDetailsAPIClient
+    @Dependency(\.apiClient) var apiClient
     
     @ObservableState
     struct State: Equatable {
@@ -88,10 +88,8 @@ struct EpisodeDetailsFeature {
     
     private func getEpisodeDetails(episodeNumberString: String) async -> Result<RMEpisode, Error> {
         do {
-            return try await getRMEpisodeDetailsAPIClient
-                .request(RickAndMortyEndpoints.episode,
-                         requestInput: EmptyRequestInput(),
-                         additionalPathContent: episodeNumberString)
+            return try await apiClient
+                .makeEpisodeDetailsRequest(episodeNumberString)
         } catch(let error) {
             return .failure(error)
         }
