@@ -42,6 +42,7 @@ private extension Views {
         static let buttonLabel: String = "Show characters list"
         static let HStackPadding: CGFloat = 10
         static let HStackHorizontalPadding: CGFloat = 10
+        static let navigationTitleStartView: String = ""
         
         static let exitButtonImageName: String = "rectangle.portrait.and.arrow.right"
         static let nonFavoriteImageName: String = "heart"
@@ -111,6 +112,7 @@ private extension Views {
                 Spacer()
             }
             .padding()
+            .navigationTitle(Views.Constants.navigationTitleStartView)
         }
     }
     

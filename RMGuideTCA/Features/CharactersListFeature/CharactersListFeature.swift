@@ -68,15 +68,6 @@ struct CharactersListFeature {
             case .changeDisplayModeButtonTapped:
                 state.displayingMode = (state.displayingMode == .grid ? .list : .grid)
                 return .none
-            case let .displayErrorModal(toBeDisplayed):
-                state.displayingErrorModal = toBeDisplayed
-                return .none
-            case .displayFavoriteCharactersButtonTapped:
-                state.displayingOnlyFavoriteCharacters.toggle()
-                return .none
-            case let .displayLoadingModal(toBeDisplayed):
-                state.displayingLoadingModal = toBeDisplayed
-                return .none
             case let .displayCharacterDetailsButtonTapped(character):
                 state.destination = .characterDetails(
                     CharacterDetailsFeature.State(character: character)
@@ -86,25 +77,29 @@ struct CharactersListFeature {
             case .displayCharactersListButtonTapped:
                 state.displayingCharactersList = true
                 
-                if state.displayingCharactersList {
-                    return .run { send in
-                        do {
-                            let getCharactersResult = await getRMCharacters()
-                            
-                            switch getCharactersResult {
-                            case .success(let characters):
-                                await send(.gotCharactersResponse(characters))
-                            case .failure(let error):
-                                await send(.errorOccured(error.localizedDescription))
-                            }
-                        } catch {
-                            
+                return .run { send in
+                    do {
+                        let getCharactersResult = await getRMCharacters()
+                        
+                        switch getCharactersResult {
+                        case .success(let characters):
+                            await send(.gotCharactersResponse(characters))
+                        case .failure(let error):
+                            await send(.errorOccured(error.localizedDescription))
                         }
+                    } catch {
+                        
                     }
-                } else {
-                    state.characters.removeAll()
-                    return .none
                 }
+            case let .displayErrorModal(toBeDisplayed):
+                state.displayingErrorModal = toBeDisplayed
+                return .none
+            case .displayFavoriteCharactersButtonTapped:
+                state.displayingOnlyFavoriteCharacters.toggle()
+                return .none
+            case let .displayLoadingModal(toBeDisplayed):
+                state.displayingLoadingModal = toBeDisplayed
+                return .none
             case .exitCharactersListButtonTapped:
                 state.displayingCharactersList = false
                 return .none

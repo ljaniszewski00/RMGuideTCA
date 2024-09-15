@@ -10,6 +10,7 @@
 		1627F0502C96DEF5007EE2B5 /* CharactersListFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627F03F2C96DE4B007EE2B5 /* CharactersListFeatureTests.swift */; };
 		1627F0512C96DEFE007EE2B5 /* EpisodeDetailsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627F0412C96DE59007EE2B5 /* EpisodeDetailsFeatureTests.swift */; };
 		1627F0522C96DF00007EE2B5 /* CharacterDetailsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627F03D2C96DE3A007EE2B5 /* CharacterDetailsFeatureTests.swift */; };
+		1627F06C2C97115E007EE2B5 /* CharactersMockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1627F06B2C97115E007EE2B5 /* CharactersMockAPIClient.swift */; };
 		1669B6DF2C75FF1700BB105F /* RMGuideTCAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1669B6DE2C75FF1700BB105F /* RMGuideTCAApp.swift */; };
 		1669B6E32C75FF1800BB105F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1669B6E22C75FF1800BB105F /* Assets.xcassets */; };
 		1669B6E62C75FF1800BB105F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1669B6E52C75FF1800BB105F /* Preview Assets.xcassets */; };
@@ -63,6 +64,7 @@
 		1627F03F2C96DE4B007EE2B5 /* CharactersListFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersListFeatureTests.swift; sourceTree = "<group>"; };
 		1627F0412C96DE59007EE2B5 /* EpisodeDetailsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsFeatureTests.swift; sourceTree = "<group>"; };
 		1627F0472C96DED3007EE2B5 /* RMGuideTCAUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RMGuideTCAUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1627F06B2C97115E007EE2B5 /* CharactersMockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersMockAPIClient.swift; sourceTree = "<group>"; };
 		1669B6DB2C75FF1700BB105F /* RMGuideTCA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RMGuideTCA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1669B6DE2C75FF1700BB105F /* RMGuideTCAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGuideTCAApp.swift; sourceTree = "<group>"; };
 		1669B6E22C75FF1800BB105F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		1627F03A2C96DDF6007EE2B5 /* CharactersListFeature */ = {
 			isa = PBXGroup;
 			children = (
+				1627F0572C97050D007EE2B5 /* Components */,
 				1627F03F2C96DE4B007EE2B5 /* CharactersListFeatureTests.swift */,
 			);
 			path = CharactersListFeature;
@@ -147,11 +150,42 @@
 		1627F0482C96DED3007EE2B5 /* RMGuideTCAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				1627F05C2C9706A4007EE2B5 /* Utils */,
 				1627F03B2C96DDFC007EE2B5 /* CharacterDetailsFeature */,
 				1627F03A2C96DDF6007EE2B5 /* CharactersListFeature */,
 				1627F03C2C96DE04007EE2B5 /* EpisodeDetailsFeature */,
 			);
 			path = RMGuideTCAUnitTests;
+			sourceTree = "<group>";
+		};
+		1627F0572C97050D007EE2B5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1627F0582C97051E007EE2B5 /* Dependencies */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		1627F0582C97051E007EE2B5 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		1627F05C2C9706A4007EE2B5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1627F06A2C971143007EE2B5 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				1627F06B2C97115E007EE2B5 /* CharactersMockAPIClient.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		1669B6D22C75FF1700BB105F = {
@@ -339,6 +373,7 @@
 		16CEAD152C7B3E8A0053A467 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				1627F06A2C971143007EE2B5 /* Mocks */,
 				16CEACFF2C7B3E8A0053A467 /* APIClient.swift */,
 				16CEAD492C7CAD990053A467 /* APIClients.swift */,
 				16CEAD112C7B3E8A0053A467 /* APIEndpoints */,
@@ -546,6 +581,7 @@
 				16CEAD1F2C7B3E8A0053A467 /* RMInfo.swift in Sources */,
 				16CEAD1A2C7B3E8A0053A467 /* RMCharacterOrigin.swift in Sources */,
 				16CEAD382C7B40720053A467 /* CharactersListDisplayMode.swift in Sources */,
+				1627F06C2C97115E007EE2B5 /* CharactersMockAPIClient.swift in Sources */,
 				16CEAD4A2C7CAD990053A467 /* APIClients.swift in Sources */,
 				16CEAD322C7B3FB90053A467 /* Color+Extension.swift in Sources */,
 				16CEAD302C7B3FB90053A467 /* LoadingIndicatorModal.swift in Sources */,

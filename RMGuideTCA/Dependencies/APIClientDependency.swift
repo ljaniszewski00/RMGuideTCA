@@ -2,11 +2,13 @@ import Foundation
 import ComposableArchitecture
 
 private enum GetRMCharactersAPIClientDependencyKey: DependencyKey {
-    static let liveValue = APIClients.getRMCharactersAPIClient
+    static var liveValue = APIClients.getRMCharactersAPIClient
+    static var testValue = APIClients.mockGetRMCharactersAPIClient
 }
 
 private enum GetRMEpisodeDetailsAPIClientDependencyKey: DependencyKey {
-    static let liveValue = APIClients.getRMEpisodeDetailsAPIClient
+    static var liveValue = APIClients.getRMEpisodeDetailsAPIClient
+    static var testValue = APIClients.mockRMEpisodeDetailsAPIClient
 }
 
 extension DependencyValues {
