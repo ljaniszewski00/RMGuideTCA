@@ -87,8 +87,6 @@ struct CharactersListFeature {
                         case .failure(let error):
                             await send(.errorOccured(error.localizedDescription))
                         }
-                    } catch {
-                        
                     }
                 }
             case let .displayErrorModal(toBeDisplayed):

@@ -18,20 +18,6 @@ final class CharactersListFeatureTests: XCTestCase {
     }
     
     @MainActor
-    func test_searchTextChanged() async {
-        let store = TestStore(initialState: CharactersListFeature.State()) {
-            CharactersListFeature()
-        }
-        
-        XCTAssertEqual(store.state.searchText, "")
-        
-        let newSearchText: String = "New search text"
-        await store.send(.searchTextChanged(newSearchText)) {
-            $0.searchText = newSearchText
-        }
-    }
-    
-    @MainActor
     func test_displayCharacterDetailsButtonTapped() async {
         let store = TestStore(initialState: CharactersListFeature.State()) {
             CharactersListFeature()
@@ -141,6 +127,89 @@ final class CharactersListFeatureTests: XCTestCase {
         await store.send(.errorOccured(testError)) {
             $0.errorText = testError
             $0.displayingErrorModal = true
+        }
+    }
+    
+    @MainActor
+    func test_searchTextChanged() async {
+        let store = TestStore(initialState: CharactersListFeature.State()) {
+            CharactersListFeature()
+        }
+        
+        XCTAssertEqual(store.state.searchText, "")
+        
+        let newSearchText: String = "New search text"
+        await store.send(.searchTextChanged(newSearchText)) {
+            $0.searchText = newSearchText
+        }
+    }
+    
+    @MainActor
+    func test_searchTextChanged_andSoCharactersToDisplay() async {
+        let store = TestStore(initialState: CharactersListFeature.State(
+            characters: [.sampleCharacter],
+            displayingCharactersList: true
+        )) {
+            CharactersListFeature()
+        }
+        
+        XCTAssertEqual(store.state.charactersToDisplay.count, 1)
+        
+        XCTAssertEqual(store.state.searchText, "")
+        
+        store.exhaustivity = .off
+        
+        let newSearchText: String = "New search text"
+        await store.send(.searchTextChanged(newSearchText))
+        
+        XCTAssertTrue(store.state.charactersToDisplay.isEmpty)
+    }
+    
+    @MainActor
+    func test_favoriteButtonTapped_thereShouldBeNoFavoriteCharacters() async {
+        let store = TestStore(initialState: CharactersListFeature.State()) {
+            CharactersListFeature()
+        }
+        
+        XCTAssertTrue(store.state.favoriteCharactersIds.isEmpty)
+    }
+    
+    @MainActor
+    func test_favoriteButtonTapped_characterShouldBeAddedToFavorites() async {
+        let store = TestStore(initialState: CharactersListFeature.State(
+            favoriteCharactersIds: [0, 1, 2]
+        )) {
+            CharactersListFeature()
+        }
+        
+        store.exhaustivity = .off
+        
+        XCTAssertFalse(store.state.favoriteCharactersIds.isEmpty)
+        
+        await store.send(.favoriteButtonTapped(3)) {
+            let favoriteCharactersCount = $0.favoriteCharactersIds.count
+            let lastFavoriteCharacterId = $0.favoriteCharactersIds.last
+            
+            XCTAssertEqual(favoriteCharactersCount, 4)
+            XCTAssertEqual(lastFavoriteCharacterId, 3)
+        }
+    }
+    
+    @MainActor
+    func test_favoriteButtonTapped_characterShouldBeRomovedFromFavorites() async {
+        let store = TestStore(initialState: CharactersListFeature.State(
+            favoriteCharactersIds: [0, 1, 2]
+        )) {
+            CharactersListFeature()
+        }
+        
+        store.exhaustivity = .off
+        
+        XCTAssertFalse(store.state.favoriteCharactersIds.isEmpty)
+        
+        await store.send(.favoriteButtonTapped(1)) {
+            XCTAssertEqual($0.favoriteCharactersIds.count, 2)
+            XCTAssertEqual($0.favoriteCharactersIds.last, 2)
         }
     }
 }

@@ -70,8 +70,6 @@ struct EpisodeDetailsFeature {
                             case .failure(let error):
                                 await send(.errorOccured(error.localizedDescription))
                             }
-                        } catch {
-                            
                         }
                     }
                 }
