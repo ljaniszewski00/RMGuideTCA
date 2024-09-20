@@ -28,9 +28,16 @@ final class CharacterDetailsFeatureTests: XCTestCase {
         }
         
         let selectedEpisodeNumberString: String = "1"
+        let newDestination: CharacterDetailsFeature.Destination.State = .episodeDetails(
+            EpisodeDetailsFeature.State(
+                episodeNumberString: selectedEpisodeNumberString
+            )
+        )
+        
         await store.send(.episodeButtonTapped(selectedEpisodeNumberString)) {
             $0.selectedEpisodeNumber = selectedEpisodeNumberString
             $0.displayingEpisodeDetailsView = true
+            $0.destination = newDestination
         }
     }
 

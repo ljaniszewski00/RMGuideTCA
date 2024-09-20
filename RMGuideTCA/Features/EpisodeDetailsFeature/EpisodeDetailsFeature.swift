@@ -18,7 +18,7 @@ struct EpisodeDetailsFeature {
         @Shared(.inMemory(AppStorageKey.episodeDetails.rawValue)) var cachedEpisodesDetails: [RMEpisode] = []
     }
     
-    enum Action: Equatable {
+    enum Action {
         case displayErrorModal(Bool)
         case displayLoadingModal(Bool)
         case errorOccured(String)
