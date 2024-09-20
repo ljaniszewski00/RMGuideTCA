@@ -166,7 +166,7 @@ final class CharactersListFeatureTests: XCTestCase {
     }
     
     @MainActor
-    func test_favoriteButtonTapped_thereShouldBeNoFavoriteCharacters() async {
+    func test_afterInit_thereShouldBeNoFavoriteCharacters() async {
         let store = TestStore(initialState: CharactersListFeature.State()) {
             CharactersListFeature()
         }
@@ -187,16 +187,13 @@ final class CharactersListFeatureTests: XCTestCase {
         XCTAssertFalse(store.state.favoriteCharactersIds.isEmpty)
         
         await store.send(.favoriteButtonTapped(3)) {
-            let favoriteCharactersCount = $0.favoriteCharactersIds.count
-            let lastFavoriteCharacterId = $0.favoriteCharactersIds.last
-            
-            XCTAssertEqual(favoriteCharactersCount, 4)
-            XCTAssertEqual(lastFavoriteCharacterId, 3)
+            XCTAssertEqual($0.favoriteCharactersIds.count, 4)
+            XCTAssertEqual($0.favoriteCharactersIds.last, 3)
         }
     }
     
     @MainActor
-    func test_favoriteButtonTapped_characterShouldBeRomovedFromFavorites() async {
+    func test_favoriteButtonTapped_characterShouldBeRemovedFromFavorites() async {
         let store = TestStore(initialState: CharactersListFeature.State(
             favoriteCharactersIds: [0, 1, 2]
         )) {

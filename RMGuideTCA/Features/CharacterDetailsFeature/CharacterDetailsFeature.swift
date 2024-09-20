@@ -11,6 +11,7 @@ struct CharacterDetailsFeature {
         var selectedEpisodeNumber: String?
         
         @Shared(.appStorage(AppStorageKey.favoriteCharacters.rawValue)) var favoriteCharactersIds: [Int] = []
+        
         var isCharacterFavorite: Bool {
             favoriteCharactersIds.contains(character.id)
         }
