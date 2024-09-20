@@ -33,7 +33,7 @@ It utilises open [Rick and Morty API](https://rickandmortyapi.com/documentation/
 
 
 ## Status
-In Progress
+Finished
 
 
 ## Requirements
