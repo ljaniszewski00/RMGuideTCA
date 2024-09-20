@@ -51,7 +51,7 @@ struct EpisodeDetailsFeature {
                 return .none
             case let .gotEpisodeDetailsResponse(episodeDetails):
                 state.episode = episodeDetails
-                return .none
+                return .send(.saveEpisodeDetailsToCache(episodeDetails))
             case .onAppear:
                 return .run { [
                     cachedEpisodesDetails = state.cachedEpisodesDetails,
@@ -71,7 +71,6 @@ struct EpisodeDetailsFeature {
                             switch getEpisodeDetailsResult {
                             case .success(let episodeDetails):
                                 await send(.gotEpisodeDetailsResponse(episodeDetails))
-                                await send(.saveEpisodeDetailsToCache(episodeDetails))
                             case .failure(let error):
                                 await send(.errorOccured(error.localizedDescription))
                             }
