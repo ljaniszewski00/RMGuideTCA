@@ -15,16 +15,21 @@ struct EpisodeDetailsFeature {
         var displayingErrorModal: Bool = false
         var errorText: String = ""
         
+        @Presents var destination: Destination.State?
+        var path = StackState<Path.State>()
+        
         @Shared(.inMemory(AppStorageKey.episodeDetails.rawValue)) var cachedEpisodesDetails: [RMEpisode] = []
     }
     
     enum Action {
+        case destination(PresentationAction<Destination.Action>)
         case displayErrorModal(Bool)
         case displayLoadingModal(Bool)
         case errorOccured(String)
         case gotEpisodeDetailsFromCache(RMEpisode)
         case gotEpisodeDetailsResponse(RMEpisode)
         case onAppear
+        case path(StackActionOf<Path>)
         case saveEpisodeDetailsToCache(RMEpisode)
     }
     
@@ -80,8 +85,14 @@ struct EpisodeDetailsFeature {
                 
                 state.cachedEpisodesDetails.append(episodeDetails)
                 return .none
+            case .destination:
+                return .none
+            case .path:
+                return .none
             }
         }
+        .ifLet(\.$destination, action: \.destination)
+        .forEach(\.path, action: \.path)
     }
     
     private func getEpisodeDetails(episodeNumberString: String) async -> Result<RMEpisode, Error> {
@@ -102,5 +113,17 @@ struct EpisodeDetailsFeature {
         return cachedEpisodesDetails.first(where: {
             $0.id == episodeId
         })
+    }
+}
+
+extension EpisodeDetailsFeature {
+    @Reducer(state: .equatable)
+    enum Destination {
+        case episodeDetails(EpisodeDetailsFeature)
+    }
+    
+    @Reducer(state: .equatable)
+    enum Path {
+        case episodeDetails(EpisodeDetailsFeature)
     }
 }

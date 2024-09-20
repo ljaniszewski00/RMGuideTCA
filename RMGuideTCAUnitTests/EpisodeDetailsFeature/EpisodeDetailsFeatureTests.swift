@@ -1,12 +1,8 @@
+import ComposableArchitecture
 import XCTest
+@testable import RMGuideTCA
 
 final class EpisodeDetailsFeatureTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        
-    }
-
-    override func tearDownWithError() throws {
-        
-    }
+    
 }
